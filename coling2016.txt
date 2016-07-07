@@ -1,0 +1,59 @@
+Syntax based denoising encoder for Neural machine translation
+
+1. Motivation: traditional encoder-decoder framework treats all words in the same way, making no distinguishment
+between function words and content words. So the trained model tends to be influenced more by function words, 
+making the model vunerable to OOVs and rare words.  So in our work, we introduce a novel kind of denoising encoder
+which utilize linguistic information to add noise into the training process, to train a robust neural MT model.
+The empirical results shows that our method achieves a significant improvement of 2.0 BLEU points over a strong NMT baseline.
+
+
+
+
+Contribution:
+1. introduct a simple yet effective denosing encoder to train robust model that could embrace the diversity of languages.
+
+2. introduct syntax information into the denosing process, which could distinguis the content words and the functio words.
+At the time, preserving the syntatic structure of the sentences.
+
+3. Our model could be viewed as syntax viraint of the NMT system, which focus more on learning the syntax structure of the language.
+Thus provide a good counterpart in the ensemble system, lead a significant improve of ** BLEU points in the ensemble experiment.
+
+
+Intro:
+
+1. The perceptive of denoising autoencoder: man could be able to recover the whole sentence using paritially corrupted ones.
+A good representation of the langugage should be robust to variations.
+
+
+2. Traditional encoder-decoder framework treats all words the same, thus the functional words may have a high impact on the generated translation.
+So we enspired by denosing autoencoder, to randomly mask some parts of the source sentence to train the NMT system.
+
+3. To guide the process of the masking, we introduce syntax information to guide the process. First, we use the pos-tag information to distinguish content words
+and functional words, masking out the less informative words. That we take advantage of syntax trees, to replace the masked words with its syntax symbols 
+which could identified its relation with surrounding words. 
+
+4. Our syntax model could be view as a syntax viraint of the NMT system, providing additional translation style, thus do good in ensamble experiment.
+
+   list 3 Contributions.
+
+   Experiment results
+
+
+Model:
+
+1. Traditional encoder-decoder NMT
+
+2. Model 1: velina denoising decoder
+
+   Model 2: DE with shallow syntax information
+
+   Model 3: DE with large and deep syntax chunks
+
+3. Training: object, equations and tricks.
+
+4. Experiment:
+	A. main expeirment, compare with drop out and 
+	B. masking rate
+	C. Drop of certain type of words.
+	D. Iteratons with the BLEU score
+	E. Character-words-phrase drop comparison
