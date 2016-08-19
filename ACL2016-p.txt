@@ -1,0 +1,44 @@
+ACL 2016 Outstanding papers:
+
+1. Transition-based dependency parsing with topological fields
+
+Motivation:
+  Topological fields is a special linguistic knowledge for German (possible other latin languages), it represents the shallow syntax of each chunk in one sentences.
+As it naturely divided the sentences into several parts, it's ideal for PCFG parsing (phrase structure tree), however its usage in dependency parsing is not fully explore,
+especially in the DNN technique background.
+  So in this paper, the DP parsing is divided into two parts: first, tag the sentence with topological fields with a sequence labeling tools (stacked bi-directional LSTM classifier).
+Than consider the topological fields as a fixed constraint and input it into the parser as one-hot representation. The parsing tool is the off-the-shelf tool from Standford parser.
+
+Results and insights:
+1. Bi-directional LSTM out-improves vanilla LSTM significantly in labeling accuracy: 93.33% vs 97.24%.  It incorporates more context, of course.
+2. Topological fields could improve the parsing accuracy for about 0.5% in German, over a very strong baseline I think.
+
+Comment:
+So a solid short paper I think, outstanding in favor of German, which held this ACL meeting.
+What we should learn is the stack bi-directional LSTM framework (which is a hot setting currently), 
+and the intuition of linguistic for DNN.
+
+2. Globally Normalized Transition-based Neural Networks
+
+Motivation:
+  The main finding in this paper is whether and why globally normalized (GN) model is better than locally normalized (LN) model in parsing task.
+The author use a simple feed-forward neural network (rather than a recurrent NN) with globally normalization in syntax parsing,
+which outperforms some RNN/LSTM counterparts. This gives us a deep insight into the parsing problem (or sequence prediction problem),
+which is that the recurrent nature is not the key element for the success of NN, because intrinsically it's a classification problem with a very limited lables:
+shift/reduce for dependency parsing, NN/NP/** for pos-tag labeling, or some emotion tags in emotion recognition, etc. 
+There is very little long distance dependency in these problem, whereas there are a great amount of search errors in the modeling training,
+which leads to "Label Bias problems" (the model is hard to recover from bad decisions or predicition in the early stage) in training. 
+So global normalization is the cure. 
+  
+Results and insights:
+  As a example for how to keep the globally normalization in training, the paper use Beam search and early update in training, so that every time the update is done
+  in order to keep the gold path in the beam, so the search errors doesn't hamper the gradient decend direction. And there are solid math prove in the paper,
+  which show that probability distribution of LN is a subset of GN. 
+  
+  This paper also presents arguably the best parser in the world supporting 40 languages (no korean).
+
+Comment:
+  I like this paper in that it dig deep into the core of the problem and reveals the truth which is somehow against common view (RNN/LSTM is best for sequence prediction).
+And the reward is producing the best parser in the world.
+
+
